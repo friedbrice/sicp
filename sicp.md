@@ -1,10 +1,10 @@
-# Answers to Exercises in __Structure and Interpretation of Computer Programs__
+# Answers to Exercises in _Structure and Interpretation of Computer Programs_
 
 ## Chapter 1
 
 ### Exercise 1.1
 
-__Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented.__
+_Below is a sequence of expressions. What is the result printed by the interpreter in response to each expression? Assume that the sequence is to be evaluated in the order in which it is presented._
 
     10
     ; 10
@@ -66,17 +66,17 @@ __Below is a sequence of expressions. What is the result printed by the interpre
 
 ### Exercise 1.2
 
-__Translate the following expression into prefix form__
+_Translate the following expression into prefix form_
 
-\[
+\begin{equation*}
 \frac{5 + 4 + (2 - (3 - (6 + \frac{4}{5})))}{3(6 - 2)(2 - 7)}
-\]
+\end{equation*}
 
     (/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5))))) (* 3 (- 6 2) (- 2 7)))
 
 ### Exercise 1.3
 
-__Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers.__
+_Define a procedure that takes three numbers as arguments and returns the sum of the squares of the two larger numbers._
 
     (define (f x y z)
             (cond ((and (< z x) (< z y)) (+ (square x) (square y)))
@@ -85,7 +85,7 @@ __Define a procedure that takes three numbers as arguments and returns the sum o
 
 ### Exercise 1.4
 
-__Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procudeure:__
+_Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procudeure:_
 
     (define (a-plus-abs-b a b)
       ((if (> b 0) + -) a b))
@@ -99,7 +99,7 @@ Basically, we observe that procedures are first-class values that can stand on t
 
 ### Exercise 1.5
 
-__Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation. He defines the following two procedures:__
+_Ben Bitdiddle has invented a test to determine whether the interpreter he is faced with is using applicative-order evaluation or normal-order evaluation. He defines the following two procedures:_
 
     (define (p) (p))
 
@@ -108,11 +108,11 @@ __Ben Bitdiddle has invented a test to determine whether the interpreter he is f
           0
           y))
 
-__Then he evaluates the expression__
+_Then he evaluates the expression_
 
     (test 0 (p))
 
-__What behavior will Ben observe with an interpreter that uses applicative-order evaluation? What behavior will he observe with an interpreter that uses normal-order evaluation? Explain your answer. (Assume that the evaluation rule for the special form if is the same whether the interpreter is using normal or applicative order: The predicate expression is evaluated first, and the result determines whether to evaluate the consequent or the alternative expression.)__
+_What behavior will Ben observe with an interpreter that uses applicative-order evaluation? What behavior will he observe with an interpreter that uses normal-order evaluation? Explain your answer. (Assume that the evaluation rule for the special form if is the same whether the interpreter is using normal or applicative order: The predicate expression is evaluated first, and the result determines whether to evaluate the consequent or the alternative expression.)_
 
 An applicative-order interpreter will evaluate arguments before attempting to resolve an operator. As applied to `(test 0 (p))`, an applicative-order interpreter will evaluate the argument `0` (already in normal form) and the argument `(p)` (causing an infinite descent) before resolving the operator `test`.
 
@@ -120,13 +120,13 @@ A normal-order interpreter will resolve operators before evaluating arguments. A
 
 ### Exercise 1.6
 
-__Alyssa P. Hacker doesn't see why `if` needs to be provided as a special form. "Why can't I just define it as an ordinary procedure in terms of `cond`?" she asks. Alyssa's friend Eva Lu Ator claims this can indeed be done, and she defines a new version of `if`:__
+_Alyssa P. Hacker doesn't see why `if` needs to be provided as a special form. "Why can't I just define it as an ordinary procedure in terms of `cond`?" she asks. Alyssa's friend Eva Lu Ator claims this can indeed be done, and she defines a new version of `if`:_
 
     (define (new-if predicate then-clause else-clause)
       (cond (predicate then-clause)
             (else else-clause)))
 
-__Eva demonstrates the program for Alyssa:__
+_Eva demonstrates the program for Alyssa:_
 
     (new-if (= 2 3) 0 5)
     ; 5
@@ -134,7 +134,7 @@ __Eva demonstrates the program for Alyssa:__
     (new-if (= 1 1) 0 5)
     ; 0
 
-__Delighted, Alyssa uses `new-if` to rewrite the square-root program:__
+_Delighted, Alyssa uses `new-if` to rewrite the square-root program:_
 
     (define (sqrt-iter guess x)
       (new-if (good-enough? guess x)
@@ -142,13 +142,13 @@ __Delighted, Alyssa uses `new-if` to rewrite the square-root program:__
               (sqrt-iter (improve guess x)
                          x)))
 
-__What happens when Alyssa attempts to use this to compute square roots? Explain.__
+_What happens when Alyssa attempts to use this to compute square roots? Explain._
 
 Alyssa's program fails to terminate. `new-if` evaluates its three arguments before it is resolved, so every call to `square-iter` causes exactly one more call to `square-iter`.
 
 ### Exercise 1.7
 
-__The `good-enough?` test used in computing square roots will not be very effective for finding the square roots of very small numbers. Also, in real computers, arithmetic operations are almost always performed with limited precision. This makes our test inadequate for very large numbers. Explain these statements, with examples showing how the test fails for small and large numbers. An alternative strategy for implementing `good-enough?` is to watch how `guess` changes from one iteration to the next and to stop when the change is a very small fraction of the guess. Design a `square-root` procedure that uses this kind of end test. Does this work better for small and large numbers?__
+_The `good-enough?` test used in computing square roots will not be very effective for finding the square roots of very small numbers. Also, in real computers, arithmetic operations are almost always performed with limited precision. This makes our test inadequate for very large numbers. Explain these statements, with examples showing how the test fails for small and large numbers. An alternative strategy for implementing `good-enough?` is to watch how `guess` changes from one iteration to the next and to stop when the change is a very small fraction of the guess. Design a `square-root` procedure that uses this kind of end test. Does this work better for small and large numbers?_
 
 Using the given implementation of `sqrt` (provided below for completeness), `(sqrt <x>)` where $0.999 < x \leq 1.001$ will erroneously return 1, since the improved guess, 1.0005, is within 0.001 of the initial guess, 1.
 
@@ -198,13 +198,13 @@ Under the new implementation, `(sqrt 0.9991)` and `(sqrt 1.001)` return distinct
 
 ### Exercise 1.8
 
-__Newton's method for cube roots is based on the fact that if $y$ is an approximation to the cube root of $x$, then a better approximation is given by the value__
+_Newton's method for cube roots is based on the fact that if $y$ is an approximation to the cube root of $x$, then a better approximation is given by the value_
 
-\[
+\begin{equation*}
 \frac{x/y^2 + 2y}{3}
-\]
+\end{equation*}
 
-__Use this formula to implement a cube-root procedure analogous to the square-root procedure. (In section 1.3.4 we will see how to implement Newton's method in general as an abstraction of these square-root and cube-root procedures.)__
+_Use this formula to implement a cube-root procedure analogous to the square-root procedure. (In section 1.3.4 we will see how to implement Newton's method in general as an abstraction of these square-root and cube-root procedures.)_
 
     (define (cbrt x)
       (define (good-enough old new)
@@ -220,7 +220,7 @@ __Use this formula to implement a cube-root procedure analogous to the square-ro
 
 ### Exercise 1.9
 
-__Each of the following two procedures defines a method for adding two positive integers in terms of the procedures `inc`, which increments its argument by 1, and `dec`, which decrements its argument by 1.__
+_Each of the following two procedures defines a method for adding two positive integers in terms of the procedures `inc`, which increments its argument by 1, and `dec`, which decrements its argument by 1._
 
     (define (+ a b)
       (if (= a 0)
@@ -232,7 +232,7 @@ __Each of the following two procedures defines a method for adding two positive 
           b
           (+ (dec a) (inc b))))
 
-__Using the substitution model, illustrate the process generated by each procedure in evaluating `(+ 4 5)`. Are these processes iterative or recursive?__
+_Using the substitution model, illustrate the process generated by each procedure in evaluating `(+ 4 5)`. Are these processes iterative or recursive?_
 
 *First Implementation:*
 
@@ -262,7 +262,7 @@ This implementation is a linear iterative process.
 
 ### Exercise 1.10
 
-__The following procedure computes a mathematical function called Ackermann's function.__
+_The following procedure computes a mathematical function called Ackermann's function._
 
     (define (A x y)
       (cond ((= y 0) 0)
@@ -271,7 +271,7 @@ __The following procedure computes a mathematical function called Ackermann's fu
             (else (A (- x 1)
                      (A x (- y 1))))))
 
-__What are the values of the following expressions?__
+_What are the values of the following expressions?_
 
     (A 1 10)
 
@@ -279,7 +279,7 @@ __What are the values of the following expressions?__
 
     (A 3 3)
 
-__Consider the following procedures, wehre `A` is the procedure defined above:__
+_Consider the following procedures, wehre `A` is the procedure defined above:_
 
     (define (f n) (A 0 n))
 
@@ -289,42 +289,42 @@ __Consider the following procedures, wehre `A` is the procedure defined above:__
 
     (define (k n) (* 5 n n))
 
-__Give concise mathematical definitions for the functions computed by the procedures `f`, `g`, and `h` for positive integer values `n`. For example, `(k n)` computes $5n^2$.__
+_Give concise mathematical definitions for the functions computed by the procedures `f`, `g`, and `h` for positive integer values `n`. For example, `(k n)` computes $5n^2$._
 
 Obviously, $A(0, n) = 2n$.
 
-*Proposition:* For $n > 0$, $A(1, n) = 2^n$.
+**Proposition:** For $n > 0$, $A(1, n) = 2^n$.
 
-Notice $A(1, 1) = 2 = 2^1$. Now, assume for induction that $A(1, k) = 2^k$ for some $k$. Then $A(1, k + 1) = A(0, A(1, k)) = 2 A(1, k) = 2 \cdot 2^k = 2^{k + 1}$, as desired. \qed
+Notice $A(1, 1) = 2 = 2^1$. Now, assume for induction that $A(1, k) = 2^k$ for some $k$. Then $A(1, k + 1) = A(0, A(1, k)) = 2 A(1, k) = 2 \cdot 2^k = 2^{k + 1}$, as desired. $\quad\blacksquare$
 
-*Proposition:* For $n > 0$, $A(2, n) = \underbrace{2^2^.^.^.^2}{n}$.
+**Proposition:** For $n > 0$, $A(2, n) = \underbrace{2^{2^{.^{.^{.^2}}}}}_{n}$.
 
-First, $A(2, 1) = 2 = \underbrace{2}{1}$. Now, assume for induction that $A(2, k) = \underbrace{2^2^.^.^.^2}{k}$ for some $k$. Then $A(2, k + 1) = A(1, A(2, k)) = 2^{A(2, k)} = 2^{\underbrace{2^2^.^.^.^2}{k}} = \underbrace{2^2^.^.^.^2}{k + 1}$, as desired. \qed
+First, $A(2, 1) = 2$. Now, assume for induction that $A(2, k) = \underbrace{2^{2^{.^{.^{.^2}}}}}_{k}$ for some $k$. Then $A(2, k + 1) = A(1, A(2, k)) = 2^{A(2, k)} = 2^{\underbrace{2^{2^{.^{.^{.^2}}}}}_{k}} = \underbrace{2^{2^{.^{.^{.^2}}}}}_{k + 1}$, as desired. $\quad\blacksquare$
 
 Now, we evaluate
 
-\[
-A(1, 10) = 2^10
-\]
+\begin{equation*}
+A(1, 10) = 2^{10}
+\end{equation*}
 
-\]
-A(2, 4) = 2^2^2^2
-\]
+\begin{equation*}
+A(2, 4) = 2^{2^{2^2}}
+\end{equation*}
 
 \begin{align*}
 A(3, 2) &= A(2, A(3, 1)) \\
-        &= \underbrace{2^2^.^.^.^2}{A(3, 1)} \\
-        &= \underbrace{2^2^.^.^.^2}{2} \\
+        &= \underbrace{2^{2^{.^{.^{.^2}}}}}_{A(3, 1)} \\
+        &= \underbrace{2^{2^{.^{.^{.^2}}}}}_{2} \\
         &= 2^2 = 4 \\
 A(3, 3) &= A(2, A(3, 2)) \\
-        &= \underbrace{2^2^.^.^.^2}{A(3, 2)} \\
-        &= \underbrace{2^2^.^.^.^2}{4} \\
-        &= 2^2^2^2
+        &= \underbrace{2^{2^{.^{.^{.^2}}}}}_{A(3, 2)} \\
+        &= \underbrace{2^{2^{.^{.^{.^2}}}}}_{4} \\
+        &= 2^{2^{2^2}}
 \end{align*}
 
 ### Exercise 1.11
 
-__A function $f$ is defined by the rule that $f(n) = n$ if $n < 3$ and $f(n) = f(n - 1) + 2f(n - 2) + 3f(n - 3)$ if $n \geq 3$. Write a procedure that computes $f$ by means of a recursive process. Write a procedure that computes $f$ by means of an iterative process.__
+_A function $f$ is defined by the rule that $f(n) = n$ if $n < 3$ and $f(n) = f(n - 1) + 2f(n - 2) + 3f(n - 3)$ if $n \geq 3$. Write a procedure that computes $f$ by means of a recursive process. Write a procedure that computes $f$ by means of an iterative process._
 
 *Recursive Process:*
 
@@ -347,7 +347,7 @@ __A function $f$ is defined by the rule that $f(n) = n$ if $n < 3$ and $f(n) = f
 
 ### Exercise 1.12
 
-__The following pattern of numbers is called __Pascal's triangle.____
+_The following pattern of numbers is called _Pascal's triangle.__
 
         1
        1 1
@@ -356,7 +356,7 @@ __The following pattern of numbers is called __Pascal's triangle.____
     1 4 6 4 1
        ...
 
-__The numbers at the edge of the triangle are all 1, and each number inside the triangle is the sum of the two numbers above it. Write a procedure that computes elements of Pascal's triangle by means of a recursive process.__
+_The numbers at the edge of the triangle are all 1, and each number inside the triangle is the sum of the two numbers above it. Write a procedure that computes elements of Pascal's triangle by means of a recursive process._
 
     (define (pascal r c)
       (cond ((> c r) (error "index out of bound" r c))
@@ -370,9 +370,9 @@ __The numbers at the edge of the triangle are all 1, and each number inside the 
 
 ### Exercise 1.13
 
-__Prove that $Fib(n)$ is the closest integer to $\phi^n / \sqrt{5}$, where $\phi = (1 + \sqrt{5}) / 2$. __Hint:__ Let $\psi = (1 - \sqrt{5}) / 2$. Use induction and the definition of the Fibonacci numbers (see section 1.2.2) to prove that $Fib(n) = (\phi^n - \psi^n) / \sqrt{5}$.__
+_Prove that $Fib(n)$ is the closest integer to $\phi^n / \sqrt{5}$, where $\phi = (1 + \sqrt{5}) / 2$. _Hint:_ Let $\psi = (1 - \sqrt{5}) / 2$. Use induction and the definition of the Fibonacci numbers (see section 1.2.2) to prove that $Fib(n) = (\phi^n - \psi^n) / \sqrt{5}$._
 
-*Proposition:* For $n \geq 0$, $Fib(n) = \frac{\phi^n - \psi^n}{\sqrt{5}}$.
+**Proposition:** For $n \geq 0$, $Fib(n) = \frac{\phi^n - \psi^n}{\sqrt{5}}$.
 
 First, notice that $\frac{\phi^0 - \psi^0}{\sqrt{5}} = 0 = Fib(0)$ and $\frac{\phi^1 - \psi^1}{\sqrt{5}} = \frac{(1 + \sqrt{5}) / 2 - (1 - \sqrt{5}) / 2}{\sqrt{5}} = 1 = Fib(1)$. Now, assume for induction that for $n < k$ we have $Fib(n) = \frac{\phi^n - \psi^n}{\sqrt{5}}$. Then
 
@@ -408,38 +408,41 @@ and
 \phi^{-1} + \phi^{-2} &= \frac{2}{1 - \sqrt{5}}
                        + \frac{4}{(1 - \sqrt{5})^2} \\
                       &= \frac{2(1 - \sqrt{5}) + 4}{(1 - \sqrt{5})^2} \\
-                      &= \frac{6 - 2 \sqrt{5}}{6 - 2 \sqrt{5}} = 1 \qed
+                      &= \frac{6 - 2 \sqrt{5}}{6 - 2 \sqrt{5}} = 1 \quad\blacksquare
 \end{align*}
 
-*Proposition:* $Fib(n)$ is the closest integer to $\phi^n / \sqrt{5}$.
+**Proposition:** $Fib(n)$ is the closest integer to $\phi^n / \sqrt{5}$.
 
 First, notice that when $n \geq 1$ we have $\psi^n / \sqrt{5} < 1/2$, so
 
 \begin{align*}
-Fib(n) &= \phi^n / \sqrt{5} - \psi^n / \sqrt{5} \\
-Fib(n) - \phi^n / sqrt{5} &= - \psi^n / \sqrt{5} \\
-\left\vert Fib(n) - \phi^n / sqrt{5} \right\vert &= \psi^n / \sqrt{5} < 1/2
+Fib(n)
+  &= \phi^n / \sqrt{5} - \psi^n / \sqrt{5} \\
+Fib(n) - \phi^n / \sqrt{5}
+  &= - \psi^n / \sqrt{5} \\
+\left\vert Fib(n) - \phi^n / \sqrt{5} \right\vert
+  &= \psi^n / \sqrt{5} < 1/2
 \end{align*}
 
 when $n \geq 1$.
 
-When $n = 0$, we have $\phi^n / \sqrt{5} = 1 / \sqrt{5} = 0.447... < 1/2$, completing the proof. \qed
+When $n = 0$, we have $\phi^n / \sqrt{5} = 1 / \sqrt{5} = 0.447... < 1/2$, completing the proof. $\quad\blacksquare$
 
 ### Exercise 1.14
 
-__Draw the tree illustrating the process generated by the `count-change` procedure of section 1.2.2 in making change for 11 cents. What are the orders of growth of the space and number of steps used by this process as the amount to be changed increases?__
+_Draw the tree illustrating the process generated by the `count-change` procedure of section 1.2.2 in making change for 11 cents. What are the orders of growth of the space and number of steps used by this process as the amount to be changed increases?_
 
     ;; TODO
 
 ### Exercise 1.15
 
-__The sine of an angle (specified in radians) can be computed by making use of the approximation $\sin x \approx x$ if $x$ is sufficiently small, and the trigonometric identity__
+_The sine of an angle (specified in radians) can be computed by making use of the approximation $\sin x \approx x$ if $x$ is sufficiently small, and the trigonometric identity_
 
-\[
+\begin{equation*}
 \sin x = 3 \sin \frac{x}{3} - 4 \sin^3 \frac{x}{3}
-\]
+\end{equation*}
 
-__to reduce the size of the argument of $\sin$. (For the purposes of this exercise an angle is considered "sufficiently small" if its magnitude is not greater than 0.1 radians.) These ideas are incorporated in the following procedures:__
+_to reduce the size of the argument of $\sin$. (For the purposes of this exercise an angle is considered "sufficiently small" if its magnitude is not greater than 0.1 radians.) These ideas are incorporated in the following procedures:_
 
     (define (cube x) (* x x x))
     (define (p x) (- (* 3 x) (* 4 (cube x))))
@@ -448,11 +451,11 @@ __to reduce the size of the argument of $\sin$. (For the purposes of this exerci
           angle
           (p (sine (/ angle 3.0)))))
 
-__a. How many times is the procedure `p` applied when `(sine 12.15)` is evaluated?__
+_a. How many times is the procedure `p` applied when `(sine 12.15)` is evaluated?_
 
 `p` is applied 5 times, once to each of 4.05, 1.35, 0.45, 0.15, and 0.05.
 
-__b. What is the order of growth in space and number of steps (as a function of $a$) used by the process generated by the `sine` procedure when `(sine a)` is evaluated?__
+_b. What is the order of growth in space and number of steps (as a function of $a$) used by the process generated by the `sine` procedure when `(sine a)` is evaluated?_
 
 Using $a = 12.15$ to estimate the algorithm complexity:
 
@@ -473,7 +476,7 @@ Based on this rudimentary analysis, it appears that `sine` grows linearly, in bo
 
 ### Exercise 1.16
 
-__Design a procedure that evolves an iterative exponentiation process that uses successive squaring and uses a logarithmic number of steps, as does `fast-expt`. (__Hint:__ Using the observation that $(b^{n/2})^2 = (b^2)^{n/2}$, keep, along with the exponent $n$ and the base $b$, an additional state variable $a$, and define the state transformation in such a way that the product $a b^n$ is unchanged from state to state. At the beginning of the process $a$ is taken to be 1, and the answer is given by the value of $a$ at the end of the process. In general, the technique of defining an __invariant quantity__ that remains unchanged from state to state is a powerful way to think about the design of iterative algorithms.)__
+_Design a procedure that evolves an iterative exponentiation process that uses successive squaring and uses a logarithmic number of steps, as does `fast-expt`. (_Hint:_ Using the observation that $(b^{n/2})^2 = (b^2)^{n/2}$, keep, along with the exponent $n$ and the base $b$, an additional state variable $a$, and define the state transformation in such a way that the product $a b^n$ is unchanged from state to state. At the beginning of the process $a$ is taken to be 1, and the answer is given by the value of $a$ at the end of the process. In general, the technique of defining an _invariant quantity_ that remains unchanged from state to state is a powerful way to think about the design of iterative algorithms.)_
 
     (define (log-iter-expt base exponent)
       (define (even n) (= (remainder n 2) 0))
