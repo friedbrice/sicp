@@ -38,17 +38,18 @@ function make_beamer {
   #        < sicp.md > texbuild/sicp-beamer.tex
 
   # cd texbuild
-  # pdflatex sicp-beamer.tex
-  # mv sicp-beamer.pdf ../target/sicp-beamer.pdf
+  # pdflatex -interaction=batchmode -halt-on-error sicp-beamer.tex
+  # cd ..
+  # mv texbuild/sicp-beamer.pdf target/sicp-beamer.pdf
 
   echo "Function 'make_beamer' not implemented!"
 }
 
-function make_lisp {
-  echo "Function 'make_lisp' not implemented!"
+function make_racket {
+  echo "Function 'make_racket' not implemented!"
 }
 
 make_html
 make_article
 make_beamer
-make_lisp
+make_racket
