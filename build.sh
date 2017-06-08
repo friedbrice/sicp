@@ -7,6 +7,8 @@ function make_html {
   pandoc --from=markdown \
          --to=html5 --standalone --mathjax \
          < sicp.md > target/sicp.html
+
+  echo "Made target/sicp.html"
 }
 
 function make_article {
@@ -19,26 +21,31 @@ function make_article {
          < sicp.md > texbuild/sicp-article.tex
 
   cd texbuild
-  pdflatex sicp-article.tex
-  mv sicp-article.pdf ../target/sicp-article.pdf
+  pdflatex -interaction=batchmode -halt-on-error sicp-article.tex
+  cd ..
+  mv texbuild/sicp-article.pdf target/sicp-article.pdf
+
+  echo "Made target/sicp-article.pdf"
 }
 
 function make_beamer {
 
-  mkdir -p texbuild
-  mkdir -p target
+  # mkdir -p texbuild
+  # mkdir -p target
 
-  pandoc --from=markdown \
-         --to=beamer --standalone \
-         < sicp.md > texbuild/sicp-beamer.tex
+  # pandoc --from=markdown \
+  #        --to=beamer --standalone \
+  #        < sicp.md > texbuild/sicp-beamer.tex
 
-  cd texbuild
-  pdflatex sicp-beamer.tex
-  mv sicp-beamer.pdf ../target/sicp-beamer.pdf
+  # cd texbuild
+  # pdflatex sicp-beamer.tex
+  # mv sicp-beamer.pdf ../target/sicp-beamer.pdf
+
+  echo "Function 'make_beamer' not implemented!"
 }
 
 function make_lisp {
-  echo "Function `make_lisp` not implemented!"
+  echo "Function 'make_lisp' not implemented!"
 }
 
 make_html
