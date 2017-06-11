@@ -93,7 +93,7 @@ _Define a procedure that takes three numbers as arguments and returns the sum of
 
 ### Exercise 1.4
 
-_Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procudeure:_
+_Observe that our model of evaluation allows for combinations whose operators are compound expressions. Use this observation to describe the behavior of the following procedure:_
 
 ~~~scheme
 (define (a-plus-abs-b a b)
@@ -317,7 +317,7 @@ _What are the values of the following expressions?_
 (A 3 3)
 ~~~
 
-_Consider the following procedures, wehre `A` is the procedure defined above:_
+_Consider the following procedures, where `A` is the procedure defined above:_
 
 ~~~scheme
 (define (f n) (A 0 n))
@@ -341,7 +341,7 @@ $$
 A(1, k + 1) = A(0, A(1, k)) = 2 A(1, k) = 2 \cdot 2^k = 2^{k + 1}
 $$
 
-as desired. $\blacksquare$
+as desired. $\square$
 
 **Proposition:** For $n > 0$, $A(2, n) = \underbrace{2^{2^{.^{.^{.^2}}}}}_{n}$.
 
@@ -351,7 +351,7 @@ $$
 A(2, k + 1) = A(1, A(2, k)) = 2^{A(2, k)} = 2^{\underbrace{2^{2^{.^{.^{.^2}}}}}_{k}} = \underbrace{2^{2^{.^{.^{.^2}}}}}_{k + 1}
 $$
 
-as desired. $\blacksquare$
+as desired. $\square$
 
 Now, we evaluate
 
@@ -466,7 +466,7 @@ and
                       &= \frac{6 - 2 \sqrt{5}}{6 - 2 \sqrt{5}} = 1
 \end{align*}
 
-completing the proof. $\blacksquare$
+completing the proof. $\square$
 
 **Proposition:** $Fib(n)$ is the closest integer to $\phi^n / \sqrt{5}$.
 
@@ -481,7 +481,7 @@ Fib(n) - \phi^n / \sqrt{5}
   &= \psi^n / \sqrt{5} < 1/2
 \end{align*}
 
-which is what we wanted to show. $\blacksquare$
+which is what we wanted to show. $\square$
 
 ### Exercise 1.14
 
@@ -588,7 +588,7 @@ _Using the results of exercises 1.16 and 1.17, devise a procedure that generates
 
 ### Exercise 1.19
 
-_There is a clevar algorithm for computing the Fibonacci numbers in a logarithmic number of steps. Recall the transformation of the state variables $a$ and $b$ in the `fib-iter` process of section 1.2.2: $a \leftarrow a + b$ and $b \leftarrow a$. Call this transformation $T$, and observe that applying $T$ over and over again $n$ times, starting with 1 and 0, produces the pair $Fib(n + 1)$ and $Fib(n)$. In other words, the Fibonacci numbers are produced by applying $T^n$, the $n$th power of the transformation $T$, starting with the pair $(1, 0)$. Now consider $T$ to be the special case of $p = 0$ and $q = 1$ in a family of transformations $T_{pq}$, where $T_{pq}$ transforms the pair $(a, b)$ according to $a \leftarrow bq + aq + ap$ and $b \leftarrow bp + aq$. Show that if we apply such a transformation $T_{pq}$ twice, the effect is the same as using a single transformation $T_{p'q'}$ of the same form, and computer $p'$ and $q'$ in terms of $p$ and $q$. This gives us an explicit way to square these transformations, and thus we can compute $T^n$ using successive squaring, as in the `fast-expt` procedure. Put this all together to complete the following procedure, which runs in a logarithmic number of steps:_
+_There is a clever algorithm for computing the Fibonacci numbers in a logarithmic number of steps. Recall the transformation of the state variables $a$ and $b$ in the `fib-iter` process of section 1.2.2: $a \leftarrow a + b$ and $b \leftarrow a$. Call this transformation $T$, and observe that applying $T$ over and over again $n$ times, starting with 1 and 0, produces the pair $Fib(n + 1)$ and $Fib(n)$. In other words, the Fibonacci numbers are produced by applying $T^n$, the $n$th power of the transformation $T$, starting with the pair $(1, 0)$. Now consider $T$ to be the special case of $p = 0$ and $q = 1$ in a family of transformations $T_{pq}$, where $T_{pq}$ transforms the pair $(a, b)$ according to $a \leftarrow bq + aq + ap$ and $b \leftarrow bp + aq$. Show that if we apply such a transformation $T_{pq}$ twice, the effect is the same as using a single transformation $T_{p'q'}$ of the same form, and computer $p'$ and $q'$ in terms of $p$ and $q$. This gives us an explicit way to square these transformations, and thus we can compute $T^n$ using successive squaring, as in the `fast-expt` procedure. Put this all together to complete the following procedure, which runs in a logarithmic number of steps:_
 
 ~~~scheme
 (define (fib n)
@@ -608,19 +608,29 @@ _There is a clevar algorithm for computing the Fibonacci numbers in a logarithmi
                         (- count 1)))))
 ~~~
 
-Explicit computation gives
+**Proposition:** $T_{p, q} \circ T_{p, q} = T_{p^2 + q^2, 2pq + q^2}$
 
-$$
-p' = p^2 + q^2
-$$
+Define $T_{p, q}(a, b) = \big( (p + q)a + qb, qa + pb \big)$. We explicitly compute the composition of $T_{p, q}$ with itself:
 
-and
+\begin{align*}
+T_{p, q} \big( T_{p, q} (a, b) \big)
+  &= T_{p, q} \big( (p + q)a + qb, qa + pb \big)
+\\
+  &= \big( (p + q)((p + q)a + qb) + q(qa + pb) ,
+           q((p + q)a + qb) + p(qa + pb)       \big)
+\\
+  &= \big( 2bpq + 2aq^2 + bq^2 + 2apq + ap^2 ,
+           bp^2 + 2apq + bq^2 + aq^2         \big)
+\\
+  &= \big( (p^2 + 2pq + 2q^2)a + (2pq + q^2)b ,
+           (2pq + q^2       )a + (p^2 + q^2)b \big)
+\\
+  &= T_{p^2 + q^2, 2pq + q^2} (a, b)
+\end{align*}
 
-$$
-q' = 2pq + q^2
-$$
+which is what we set out to show. $\square$
 
-Thus, we have
+Exploiting the above proposition in our scheme, we get
 
 ~~~scheme
 (define (fib n)
@@ -638,4 +648,33 @@ Thus, we have
                         p
                         q
                         (- count 1)))))
+
+(fib 1000000)
+; 1953282128...(208968 omitted digits)...8242546875
+~~~
+
+### Exercise 1.20
+
+_The process that a procedure generates is of course dependent on the rules used by the interpreter. As an example, consider the iterative `gcd` procedure given above. Suppose we were to interpret this procedure using normal-order evaluation, as discussed in section 1.15. (The normal-order-evaluation rule for `if` is described in exercise 1.5.) Using the substitution method (for normal order), illustrate the process generated in evaluating `(gcd 206 40)` and indicate the `remainder` operations that are actually performed. How many `remainder` operations are actually performed in the normal-order evaluation of `(gcd 206 40)`? In the applicative-order evaluation?_
+
+**Applicative-order Evaluation:**
+
+~~~scheme
+(gcd 206 40)
+; (gcd 40 (remainder 206 40))
+; (gcd 40 6)
+; (gcd 6 (remainder 40 6))
+; (gcd 6 4)
+; (gcd 4 (remainder 6 4))
+; (gcd 4 2)
+; (gcd 2 (remainder 4 2))
+; (gcd 2 0)
+; 2
+~~~
+
+**Normal-order Evaluation:**
+
+~~~scheme
+(gcd 206 40)
+; (gcd 40 (remainder 206 40))
 ~~~

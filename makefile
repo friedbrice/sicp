@@ -10,7 +10,7 @@ pdf: sicp.md target
 	pandoc -t latex -o target/sicp.pdf sicp.md
 
 racket: sicp.md target
-	echo "make target 'racket' not implemented"
+	$(info 'racket' target not implemented)
 
 clean:
 	if [ -d target ]; then rm -r target; fi
