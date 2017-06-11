@@ -341,7 +341,7 @@ $$
 A(1, k + 1) = A(0, A(1, k)) = 2 A(1, k) = 2 \cdot 2^k = 2^{k + 1}
 $$
 
-as desired. $\square$
+as desired. $\blacksquare$
 
 **Proposition:** For $n > 0$, $A(2, n) = \underbrace{2^{2^{.^{.^{.^2}}}}}_{n}$.
 
@@ -351,7 +351,7 @@ $$
 A(2, k + 1) = A(1, A(2, k)) = 2^{A(2, k)} = 2^{\underbrace{2^{2^{.^{.^{.^2}}}}}_{k}} = \underbrace{2^{2^{.^{.^{.^2}}}}}_{k + 1}
 $$
 
-as desired. $\square$
+as desired. $\blacksquare$
 
 Now, we evaluate
 
@@ -466,7 +466,7 @@ and
                       &= \frac{6 - 2 \sqrt{5}}{6 - 2 \sqrt{5}} = 1
 \end{align*}
 
-completing the proof. $\square$
+completing the proof. $\blacksquare$
 
 **Proposition:** $Fib(n)$ is the closest integer to $\phi^n / \sqrt{5}$.
 
@@ -481,7 +481,7 @@ Fib(n) - \phi^n / \sqrt{5}
   &= \psi^n / \sqrt{5} < 1/2
 \end{align*}
 
-which is what we wanted to show. $\square$
+which is what we wanted to show. $\blacksquare$
 
 ### Exercise 1.14
 
@@ -628,7 +628,7 @@ T_{p, q} \big( T_{p, q} (a, b) \big)
   &= T_{p^2 + q^2, 2pq + q^2} (a, b)
 \end{align*}
 
-which is what we set out to show. $\square$
+which is what we set out to show. $\blacksquare$
 
 Exploiting the above proposition in our scheme, we get
 
